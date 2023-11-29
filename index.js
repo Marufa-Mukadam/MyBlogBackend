@@ -66,6 +66,6 @@ app.use("/api/posts", postRoutes);
 
 export {hbs}
 
-app.listen(3002, () => {
-  console.log("Running on port 3002");
+app.listen(3002, '0.0.0.0', () => {
+  console.log(`Server is running on http://0.0.0.0:${port}`);
 });
