@@ -41,7 +41,9 @@ app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 app.set("views", "D:\\My-Blog\\my-blog\\api\\views");
 
-
+app.get("/",(req,res)=>{
+  res.send("hello")
+})
 //CLOUD CODE
 // app.get ("/images/:key",(req,res)=>{
 //   const key=req.params.key
