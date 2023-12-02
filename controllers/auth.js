@@ -170,7 +170,7 @@ export const register = (req, res) => {
       const mailOptions = {
         from: process.env.MAIL,
         to: email,
-        subject: "Reset password",
+        subject: "Registration mail",
         template: `password`,
         context: {
           OTP: `${otp}`, //replacing {{OTP}} in handlebar with otp value
