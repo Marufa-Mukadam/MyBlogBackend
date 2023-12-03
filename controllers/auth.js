@@ -163,8 +163,8 @@ export const register = (req, res) => {
       const transporter = nodemailer.createTransport({
         service: process.env.SERVICE, // Use the appropriate email service provider
         auth: {
-          user: process.env.MAIL, // Your email address
-          pass: process.env.MAILPASS, // app-specific password
+          user: "marufamukadam696@gmail.com", // Your email address
+          pass: "ynzdphqivryvzvwv", // app-specific password
         },
       });
       const mailOptions = {
