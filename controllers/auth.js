@@ -125,7 +125,8 @@ export const verify_otp = async (req, res) => {
 };
 
 export const register = (req, res) => {
-
+  console.log(process.env.MAIL),
+  console.log(process.env.MAILPASS)
     //validation
     const { error, value } = registrationValidation.validate(req.body, {
       abortEarly: false, //if there are multiple errors in the validation all of them will be shown else the execution will be stopped as soon as it encounters first error.
@@ -160,8 +161,7 @@ export const register = (req, res) => {
       const RegisterTemplate = fs.readFileSync(RegisterEmailTemplatePath, 'utf-8');
       const compileTemplate = (template) => handlebars.compile(template);
       const RegisterEmailTemplate = compileTemplate(RegisterTemplate);
-      console.log(process.env.MAIL),
-      console.log(process.env.MAILPASS)
+      
       const transporter = nodemailer.createTransport({
         service: process.env.SERVICE, // Use the appropriate email service provider
         
