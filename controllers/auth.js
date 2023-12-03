@@ -125,8 +125,6 @@ export const verify_otp = async (req, res) => {
 };
 
 export const register = (req, res) => {
-  console.log(process.env.MAILOrg),
-  console.log(process.env.MAILPASS)
     //validation
     const { error, value } = registrationValidation.validate(req.body, {
       abortEarly: false, //if there are multiple errors in the validation all of them will be shown else the execution will be stopped as soon as it encounters first error.
@@ -167,8 +165,8 @@ export const register = (req, res) => {
         
         auth: {
           
-          user: "marufamukadam696@gmail.com", // Your email address
-          pass: "ynzdphqivryvzvwv", // app-specific password
+          user: process.env.MAILOrg, // Your email address
+          pass: process.env.MAILPASS, // app-specific password
         },
       });
       const mailOptions = {
