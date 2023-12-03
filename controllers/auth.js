@@ -160,9 +160,13 @@ export const register = (req, res) => {
       const RegisterTemplate = fs.readFileSync(RegisterEmailTemplatePath, 'utf-8');
       const compileTemplate = (template) => handlebars.compile(template);
       const RegisterEmailTemplate = compileTemplate(RegisterTemplate);
+      console.log(process.env.MAIL),
+      console.log(process.env.MAILPASS)
       const transporter = nodemailer.createTransport({
         service: process.env.SERVICE, // Use the appropriate email service provider
+        
         auth: {
+          
           user: "marufamukadam696@gmail.com", // Your email address
           pass: "ynzdphqivryvzvwv", // app-specific password
         },
