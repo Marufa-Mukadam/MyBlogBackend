@@ -125,7 +125,7 @@ export const verify_otp = async (req, res) => {
 };
 
 export const register = (req, res) => {
-  console.log(process.env.MAIL),
+  console.log(process.env.MAILOrg),
   console.log(process.env.MAILPASS)
     //validation
     const { error, value } = registrationValidation.validate(req.body, {
