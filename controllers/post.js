@@ -89,13 +89,14 @@ export const addPost = (req, res) => {
       );
     }
     
-   
+   let category_id = NULL
     const q1 = "select id from category where name = ?"
     db.query(q1,[req.body.category],(err,data1)=>{
       console.log("daaataaaa", data1)
       if(data1 && data1.length > 0){
        category_id =data1[0].id
       }
+      console.log(category_id)
    
     console.log(category_id,"cnskjhfkjhbf h")
     
