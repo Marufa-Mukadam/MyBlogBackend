@@ -89,16 +89,16 @@ export const addPost = (req, res) => {
       );
     }
     
-   let category_id = null
-    const q1 = "select id from category where name = ?"
-    db.query(q1,[req.body.category],(err,data1)=>{
-      console.log("daaataaaa", data1)
-      if(data1 && data1.length > 0){
-       category_id =data1[0].id
-      }
-      console.log(category_id)
+  //  let category_id = null
+  //   const q1 = "select id from category where name = ?"
+  //   db.query(q1,[req.body.category],(err,data1)=>{
+  //     console.log("daaataaaa", data1)
+  //     if(data1 && data1.length > 0){
+  //      category_id =data1[0].id
+  //     }
+  //     console.log(category_id)
    
-    console.log(category_id,"cnskjhfkjhbf h")
+  //   console.log(category_id,"cnskjhfkjhbf h")
     
     const q =
       "INSERT INTO posts(`title`, `description`, `img`, `date`,`user_id`,`category`,`other_category`,flag,`category_id`) VALUES (?)";
@@ -111,7 +111,7 @@ export const addPost = (req, res) => {
       req.body.category,
       req.body.other_category,
       flag,
-      category_id
+      req.body.category_id
     ];
     db.query(q, [values], (err, data) => {
       if (err) {
@@ -122,8 +122,7 @@ export const addPost = (req, res) => {
         return res.status(200).json({ message: "post created", flag: flag });
       }
     });
-  });
-};
+  }
 
 export const deletePost = (req, res) => {
     const postId = req.params.id;
