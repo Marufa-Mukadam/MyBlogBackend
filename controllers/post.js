@@ -88,8 +88,11 @@ export const addPost = (req, res) => {
         "Invalid Request: " + JSON.stringify(error.details[0].message)
       );
     }
+    const q1 = "select id from category where id = ?"
+    const q12 =db.query(q1,[req.body.category_id])
+    console.log(q12)
     const q =
-      "INSERT INTO posts(`title`, `description`, `img`, `category`, `date`,`user_id`,`other_category`,flag) VALUES (?)";
+      "INSERT INTO posts(`title`, `description`, `img`, `date`,`user_id`,`other_category`,flag,`category_id`) VALUES (?)";
     const values = [
       req.body.title,
       req.body.description,
@@ -97,8 +100,9 @@ export const addPost = (req, res) => {
       req.body.category,
       date,
       user_id,
-      req.body.other_category,
+      category_id,
       flag,
+
     ];
     db.query(q, [values], (err, data) => {
       if (err) {
