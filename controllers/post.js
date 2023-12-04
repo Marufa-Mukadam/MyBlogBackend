@@ -88,12 +88,14 @@ export const addPost = (req, res) => {
         "Invalid Request: " + JSON.stringify(error.details[0].message)
       );
     }
-    let data = ''
-   
+    
+   let category_id =''
     const q1 = "select id from category where name = ?"
-     data = db.query(q1,[req.body.category],(err,data1)=>{
+    db.query(q1,[req.body.category],(err,data1)=>{
       console.log("daaataaaa", data1)
-      const category_id =data1[0].id
+      if(data1){
+       category_id =data1[0].id
+      }
    
     
     
