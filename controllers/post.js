@@ -89,7 +89,7 @@ export const addPost = (req, res) => {
       );
     }
     
-   let category_id =''
+   
     const q1 = "select id from category where name = ?"
     db.query(q1,[req.body.category],(err,data1)=>{
       console.log("daaataaaa", data1)
@@ -97,7 +97,7 @@ export const addPost = (req, res) => {
        category_id =data1[0].id
       }
    
-    
+    console.log(category_id,"cnskjhfkjhbf h")
     
     const q =
       "INSERT INTO posts(`title`, `description`, `img`, `date`,`user_id`,`category`,`other_category`,flag,`category_id`) VALUES (?)";
