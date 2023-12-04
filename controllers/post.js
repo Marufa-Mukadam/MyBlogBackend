@@ -88,11 +88,14 @@ export const addPost = (req, res) => {
         "Invalid Request: " + JSON.stringify(error.details[0].message)
       );
     }
-    let q12 = ''
+    let data = ''
     if(req.body.category ){
     const q1 = "select id from category where name = ?"
-    q12 =db.query(q1,[req.body.category])
-    console.log(q12)
+     data = db.query(q1,[req.body.category],(err,data1)=>{
+      return data1
+    })
+    console.log("daaataaaa", data)
+    
     }
     const q =
       "INSERT INTO posts(`title`, `description`, `img`, `date`,`user_id`,`category`,`other_category`,flag,`category_id`) VALUES (?)";
@@ -105,7 +108,7 @@ export const addPost = (req, res) => {
       req.body.category,
       req.body.other_category,
       flag,
-      q12
+      data1
     ];
     db.query(q, [values], (err, data) => {
       if (err) {
