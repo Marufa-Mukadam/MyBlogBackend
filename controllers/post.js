@@ -89,14 +89,14 @@ export const addPost = (req, res) => {
       );
     }
     let data = ''
-    if(req.body.category ){
+   
     const q1 = "select id from category where name = ?"
      data = db.query(q1,[req.body.category],(err,data1)=>{
-      return data1
-    })
-    console.log("daaataaaa", data)
+      console.log("daaataaaa", data1)
+      const category_id =data1[0].id
+   
     
-    }
+    
     const q =
       "INSERT INTO posts(`title`, `description`, `img`, `date`,`user_id`,`category`,`other_category`,flag,`category_id`) VALUES (?)";
     const values = [
@@ -108,7 +108,7 @@ export const addPost = (req, res) => {
       req.body.category,
       req.body.other_category,
       flag,
-      1
+      category_id
     ];
     db.query(q, [values], (err, data) => {
       if (err) {
@@ -119,6 +119,7 @@ export const addPost = (req, res) => {
         return res.status(200).json({ message: "post created", flag: flag });
       }
     });
+  });
 };
 
 export const deletePost = (req, res) => {
