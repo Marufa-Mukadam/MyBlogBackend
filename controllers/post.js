@@ -94,18 +94,17 @@ export const addPost = (req, res) => {
     console.log(q12)
     }
     const q =
-      "INSERT INTO posts(`title`, `description`, `img`, `date`,`user_id`,`other_category`,flag,`category_id`) VALUES (?)";
+      "INSERT INTO posts(`title`, `description`, `img`, `date`,`user_id`,`category`,`other_category`,flag,`category_id`) VALUES (?)";
     const values = [
       req.body.title,
       req.body.description,
       req.body.img,
       date,
       user_id,
+      req.body.category,
       req.body.other_category,
       flag,
       q12
-      
-
     ];
     db.query(q, [values], (err, data) => {
       if (err) {
