@@ -108,7 +108,7 @@ export const addPost = (req, res) => {
       req.body.category,
       req.body.other_category,
       flag,
-      2
+      1
     ];
     db.query(q, [values], (err, data) => {
       if (err) {
