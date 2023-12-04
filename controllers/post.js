@@ -88,9 +88,10 @@ export const addPost = (req, res) => {
         "Invalid Request: " + JSON.stringify(error.details[0].message)
       );
     }
+    let q12 = ''
     if(req.body.category ){
     const q1 = "select id from category where name = ?"
-    const q12 =db.query(q1,[req.body.category])
+    q12 =db.query(q1,[req.body.category])
     console.log(q12)
     }
     const q =
