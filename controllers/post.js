@@ -89,7 +89,7 @@ export const addPost = (req, res) => {
       );
     }
     
-   let category_id = NULL
+   let category_id = null
     const q1 = "select id from category where name = ?"
     db.query(q1,[req.body.category],(err,data1)=>{
       console.log("daaataaaa", data1)
