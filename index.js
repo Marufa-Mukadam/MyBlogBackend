@@ -65,7 +65,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 
 export {hbs}
-const port = 3000
+const port = 3002
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running on http://0.0.0.0:${port}`);
 });

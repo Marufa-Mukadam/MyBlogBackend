@@ -162,13 +162,12 @@ export const register = (req, res) => {
       
       const transporter = nodemailer.createTransport({
         service: process.env.SERVICE, // Use the appropriate email service provider
-        
         auth: {
-          
-          user: process.env.MAILOrg, // Your email address
+          user: process.env.MAILORG, // Your email address
           pass: process.env.MAILPASS, // app-specific password
         },
       });
+
       const mailOptions = {
         from: process.env.MAIL,
         to: email,
@@ -178,6 +177,7 @@ export const register = (req, res) => {
           OTP: `${otp}`, //replacing {{OTP}} in handlebar with otp value
         },
       };
+      
       transporter.sendMail({...mailOptions,html: RegisterEmailTemplate(mailOptions.context)}, (error, info) => {
         if (error) {
           console.error("Error sending email:", error);
