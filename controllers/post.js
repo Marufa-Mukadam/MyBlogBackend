@@ -53,7 +53,7 @@ export const getPosts = (req, res) => {
     const category_id = req.query.category_id
     const flag = "false";
     const search_category_value = search_category ? search_category : "";
-    const q = `SELECT p.id, username,title,description,p.img,other_category,date,flag FROM posts p JOIN users u ON u.id=p.user_id JOIN category c ON c.id = p.category_id  WHERE flag=? and c.name LIKE '${search_category_value}%'  ORDER BY id desc `;
+    const q = `SELECT p.id, username,title,description,p.img,other_category,date,flag FROM posts p JOIN users u ON u.id=p.user_id JOIN category c ON c.id = p.category_id  WHERE flag=? and c.id = '${category_id}'  ORDER BY id desc `;
     db.query(q, flag, (err, data) => {
       if (err) {
         res.status(500).send(err);
