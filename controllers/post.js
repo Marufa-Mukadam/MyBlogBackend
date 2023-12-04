@@ -100,7 +100,7 @@ export const addPost = (req, res) => {
       req.body.category,
       date,
       user_id,
-      category_id,
+      q12,
       flag,
 
     ];
