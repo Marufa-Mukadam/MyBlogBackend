@@ -47,22 +47,38 @@ export const publishPost = (req, res) => {
       }
     });
 };
-
+// export const getPosts = (req, res) => {
+//   const search_category = req.query.search;
+//   const category_id = req.query.category_id
+//   const flag = "false";
+//   const search_category_value = search_category ? search_category : "";
+//   const q = `SELECT p.id, username,title,description,p.img,other_category,c.name,date,flag FROM posts p JOIN users u ON u.id=p.user_id JOIN category c ON c.id = p.category_id  WHERE flag=? and c.id = '${category_id}'  ORDER BY id desc `;
+//   db.query(q, flag, (err, data) => {
+//     if (err) {
+//       res.status(500).send(err);
+//     } 
+//     else {
+//       return res.status(200).send(data);
+//     }
+//   });
+// };
 export const getPosts = (req, res) => {
-    const search_category = req.query.search;
-    const category_id = req.query.category_id
-    const flag = "false";
-    const search_category_value = search_category ? search_category : "";
-    const q = `SELECT p.id, username,title,description,p.img,other_category,c.name,date,flag FROM posts p JOIN users u ON u.id=p.user_id JOIN category c ON c.id = p.category_id  WHERE flag=? and c.id = '${category_id}'  ORDER BY id desc `;
-    db.query(q, flag, (err, data) => {
-      if (err) {
-        res.status(500).send(err);
-      } 
-      else {
+
+  const search_category=req.query.search;
+  console.log("search category", search_category)
+  const flag = "false";
+  const search_category_value=search_category?search_category:"";
+  console.log("search_category_value",search_category_value)
+  const q = `SELECT p.id, username,title,description,p.img,category,other_category,date,flag FROM posts p JOIN users u ON u.id=p.user_id WHERE flag=? and category LIKE '${search_category_value}%'  ORDER BY id desc `;
+      db.query(q, flag, (err, data) => {
+        if (err){
+         res.status(500).send(err);
+      }
+        else{
         return res.status(200).send(data);
       }
     });
-};
+  }
 
 export const getPost = (req, res) => {
     const q =
@@ -77,53 +93,137 @@ export const getPost = (req, res) => {
     });
 };
 
-export const addPost = (req, res) => {
-    const { user_id } = req.params;
-    const date = new Date();
-    const flag = 2;
-    const { error, value } = blogValidation.validate(req.body, {
-      abortEarly: false,
-    });
-    if (error) {
-      return res.send(
-        "Invalid Request: " + JSON.stringify(error.details[0].message)
-      );
-    }
+// export const addPost = (req, res) => {
+//     const { user_id } = req.params;
+//     const date = new Date();
+//     const flag = 2;
+//     const { error, value } = blogValidation.validate(req.body, {
+//       abortEarly: false,
+//     });
+//     if (error) {
+//       return res.send(
+//         "Invalid Request: " + JSON.stringify(error.details[0].message)
+//       );
+//     }
     
-  //  let category_id = null
-  //   const q1 = "select id from category where name = ?"
-  //   db.query(q1,[req.body.category],(err,data1)=>{
-  //     console.log("daaataaaa", data1)
-  //     if(data1 && data1.length > 0){
-  //      category_id =data1[0].id
-  //     }
-  //     console.log(category_id)
+//   //  let category_id = null
+//   //   const q1 = "select id from category where name = ?"
+//   //   db.query(q1,[req.body.category],(err,data1)=>{
+//   //     console.log("daaataaaa", data1)
+//   //     if(data1 && data1.length > 0){
+//   //      category_id =data1[0].id
+//   //     }
+//   //     console.log(category_id)
    
-  //   console.log(category_id,"cnskjhfkjhbf h")
+//   //   console.log(category_id,"cnskjhfkjhbf h")
     
-    const q =
-      "INSERT INTO posts(`title`, `description`, `img`, `date`,`user_id`,`other_category`,flag,`category_id`) VALUES (?)";
-    const values = [
-      req.body.title,
-      req.body.description,
-      req.body.img,
-      date,
-      user_id,
-      req.body.other_category,
-      flag,
-      req.body.category_id
-    ];
-    db.query(q, [values], (err, data) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json(err);
-      } 
-      else {
-        return res.status(200).json({ message: "post created", flag: flag });
-      }
-    });
-  }
+//     const q =
+//       "INSERT INTO posts(`title`, `description`, `img`, `date`,`user_id`,``,`other_category`,flag,`category_id`) VALUES (?)";
+//     const values = [
+//       req.body.title,
+//       req.body.description,
+//       req.body.img,
+//       date,
+//       user_id,
+//       req.body.other_category,
+//       flag,
+//       req.body.category_id
+//     ];
+//     db.query(q, [values], (err, data) => {
+//       if (err) {
+//         console.log(err);
+//         return res.status(500).json(err);
+//       } 
+//       else {
+//         return res.status(200).json({ message: "post created", flag: flag });
+//       }
+//     });
+//   }
 
+export const addPost = (req, res) => {
+
+  const {user_id}=req.params
+  const date = new Date();
+  const { error, value } = blogValidation.validate(req.body, {
+    abortEarly: false,
+  });
+  if (error) {
+    return res.send(
+      "Invalid Request: " + JSON.stringify(error.details[0].message)
+    );
+  }
+  const flag = 2;
+  const q =
+    "INSERT INTO posts(`title`, `description`, `img`, `category`, `date`,`user_id`,`other_category`,flag) VALUES (?)";
+
+  const values = [
+    req.body.title,
+    req.body.description,
+    req.body.img,
+    req.body.category,
+    date,
+    user_id,
+    req.body.other_category,
+    flag,
+  ];
+
+  db.query(q, [values], (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    } 
+    else {
+          return res.status(200).json({ message: "post created", flag: flag });
+      }});
+    }
+
+
+    // export const addPost = (req, res) => {
+    //   const { user_id } = req.params;
+    //   const date = new Date();
+    //   const flag = 2;
+    //   const { error, value } = blogValidation.validate(req.body, {
+    //     abortEarly: false,
+    //   });
+    //   if (error) {
+    //     return res.send(
+    //       "Invalid Request: " + JSON.stringify(error.details[0].message)
+    //     );
+    //   }
+      
+    // //  let category_id = null
+    // //   const q1 = "select id from category where name = ?"
+    // //   db.query(q1,[req.body.category],(err,data1)=>{
+    // //     console.log("daaataaaa", data1)
+    // //     if(data1 && data1.length > 0){
+    // //      category_id =data1[0].id
+    // //     }
+    // //     console.log(category_id)
+     
+    // //   console.log(category_id,"cnskjhfkjhbf h")
+      
+    //   const q =
+    //     "INSERT INTO posts(`title`, `description`, `img`, `date`,`user_id`,`other_category`,flag,`category_id`) VALUES (?)";
+    //   const values = [
+    //     req.body.title,
+    //     req.body.description,
+    //     req.body.img,
+    //     date,
+    //     user_id,
+    //     req.body.other_category,
+    //     flag,
+    //     req.body.category_id
+    //   ];
+    //   db.query(q, [values], (err, data) => {
+    //     if (err) {
+    //       console.log(err);
+    //       return res.status(500).json(err);
+    //     } 
+    //     else {
+    //       return res.status(200).json({ message: "post created", flag: flag });
+    //     }
+    //   });
+    // }
 export const deletePost = (req, res) => {
     const postId = req.params.id;
     const q = "DELETE FROM posts Where id = ? AND posts.user_id = ?;";

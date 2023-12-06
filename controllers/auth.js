@@ -76,11 +76,13 @@ export const forgot_password = async (req, res) => {
 
 export const verify_otp = async (req, res) => {
   try{
+    
     const { hashedotp, email, otp, values, newpassword } = req.body;
     const [hashValue, otpExpiry] = hashedotp.split(".");
     const now = Date.now();
 
     if (now > parseInt(otpExpiry)) {
+     
       return res.send("otp expired");
     }
     const otpdata = `${email}.${otp}.${otpExpiry}`;
@@ -89,7 +91,11 @@ export const verify_otp = async (req, res) => {
       .update(otpdata)
       .digest("hex");
 
+      console.log("newCalculatedHash", newCalculatedHash )
+      console.log("hashValue", hashValue)
+
     if (newCalculatedHash === hashValue) {
+      
       if (newpassword) {
          db.query(`UPDATE users SET password = ? WHERE email = ?`, [newpassword, email]);
         res.status(200).send({
@@ -98,6 +104,7 @@ export const verify_otp = async (req, res) => {
         })
       } 
       else {
+        
         const data = [
           values.username,
           email,
@@ -141,7 +148,7 @@ export const register = (req, res) => {
       if (err) {
         res.json(err);
       }
-      if (data.length) {
+      if (data && data.length) {
         return res.status(409).json("user already exist");
       }
       const { password,email } = req.body;

@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "../my-blog-client/public/upload");
+    cb(null, "D:/My-Blog-live/My-Blog/my-blog-client/public/upload");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname); //datenow is used to prevent overriding of file
@@ -65,7 +65,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 
 export {hbs}
-const port = 3000
+const port = 3002
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running on http://0.0.0.0:${port}`);
 });
